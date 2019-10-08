@@ -1,0 +1,39 @@
+package Ar;
+
+
+import java.io.*;
+import java.sql.*;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/signup1")
+public class signup1 extends HttpServlet {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String un=request.getParameter("uname");
+		String pw=request.getParameter("psw");
+		
+       String query ="insert into data values (?,?)";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/login", "root", "3058"); // gets a new connection
+
+		PreparedStatement ps = c.prepareStatement(query);
+		ps.setString(1, un);
+		ps.setString(2, pw);
+		 ps.executeUpdate();
+		response.sendRedirect("login1.jsp");
+		}
+		catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		
+	}
+
+}
